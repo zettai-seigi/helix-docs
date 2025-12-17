@@ -7,9 +7,10 @@
 
 site_name: Helix Documentation
 site_description: Cascading Persona Ecosystem - Federated MCP Server Implementation
-site_url: https://helix.example.com
-repo_url: https://github.com/example/helix
-repo_name: helix
+site_url: https://zettai-seigi.github.io/helix-docs/
+repo_url: https://github.com/zettai-seigi/helix-docs
+repo_name: helix-docs
+docs_dir: .
 
 # Theme Configuration
 theme:
