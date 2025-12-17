@@ -1,0 +1,197 @@
+# =============================================================================
+# Helix Documentation - MkDocs Material Configuration
+# =============================================================================
+# Generated documentation from MDSL contracts
+# Includes: API Reference, Architecture, User Guides
+# =============================================================================
+
+site_name: Helix Documentation
+site_description: Cascading Persona Ecosystem - Federated MCP Server Implementation
+site_url: https://helix.example.com
+repo_url: https://github.com/example/helix
+repo_name: helix
+
+# Theme Configuration
+theme:
+  name: material
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/graph-outline
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  - tags
+  - minify:
+      minify_html: true
+
+# Extensions
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - tables
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Extra CSS/JS
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+# Navigation
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - Configuration: getting-started/configuration.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - 12-Layer Cascade: architecture/layers.md
+      - Federated MCP Servers: architecture/mcp-servers.md
+      - Knowledge Graph: architecture/knowledge-graph.md
+      - Discovery Triad: architecture/discovery-triad.md
+      - Human Gates: architecture/human-gates.md
+      - Decision Records:
+          - Index: architecture/decisions/index.md
+          - ADR-001 Neo4j: architecture/decisions/001-neo4j-knowledge-graph.md
+          - ADR-002 Federated MCP: architecture/decisions/002-federated-mcp-servers.md
+          - ADR-003 UID Taxonomy: architecture/decisions/003-uid-taxonomy.md
+          - ADR-004 12-Layer Cascade: architecture/decisions/004-12-layer-cascade.md
+          - ADR-005 Human Gates: architecture/decisions/005-human-gates.md
+          - ADR-006 Redis Events: architecture/decisions/006-redis-event-bus.md
+          - ADR-007 Casbin RBAC: architecture/decisions/007-casbin-rbac.md
+          - ADR-008 Multi-Tenant: architecture/decisions/008-multi-tenant-isolation.md
+          - ADR-009 Z3 SMT: architecture/decisions/009-z3-smt-verification.md
+          - ADR-010 Next.js Dashboard: architecture/decisions/010-nextjs-dashboard.md
+  - API Reference:
+      - Overview: api/index.md
+      - Graph Core: api/graph.md
+      - Discovery: api/discovery.md
+      - Derivation: api/derivation.md
+      - Cascade: api/cascade.md
+      - Verification: api/verification.md
+      - Events: api/events.md
+      - Prompt Templates: api/prompts.md
+      - Interactive API Docs: api/swagger.md
+  - Guides:
+      - Persona Discovery: guides/persona-discovery.md
+      - Requirements Engineering: guides/requirements.md
+      - Conflict Resolution: guides/conflicts.md
+      - Artifact Generation: guides/generation.md
+      - Verification & Drift: guides/verification.md
+      - GDPR Compliance: guides/gdpr.md
+      - Orchestration: guides/orchestration.md
+      - Claude Worker: guides/claude-worker.md
+      - Frontend Implementation: guides/frontend-implementation.md
+      - Advanced Topics: guides/advanced-topics.md
+  - Operations:
+      - Deployment: operations/deployment.md
+      - Monitoring: operations/monitoring.md
+      - Security: operations/security.md
+      - Disaster Recovery: operations/disaster-recovery.md
+      - Troubleshooting: operations/troubleshooting.md
+  - Dashboard:
+      - Overview: dashboard/index.md
+      - Features: dashboard/features.md
+      - API Routes: dashboard/api-routes.md
+      - Components: dashboard/components.md
+      - Deployment: dashboard/deployment.md
+  - Reference:
+      - UID Taxonomy: reference/uid.md
+      - CML Format: reference/cml.md
+      - Error Codes: reference/errors.md
+      - Layer Codes: reference/layers.md
+  - Development:
+      - Contributing: development/contributing.md
+      - Testing: development/testing.md
+      - MDSL Contracts: development/mdsl.md
+
+# Extra
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/example/helix
+  version:
+    provider: mike
+
+# Copyright
+copyright: Copyright &copy; 2024-2025 Helix Project

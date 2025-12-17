@@ -1,0 +1,563 @@
+asyncapi: 2.6.0
+info:
+  title: Helix MCP Events
+  version: 1.0.0
+  description: Event-driven API for the Helix Cascading Persona Ecosystem
+channels:
+  helix:{tenant_id}:artifact.linked:
+    description: Channel for ArtifactLinkedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishArtifactLinkedEvent
+      message:
+        $ref: "#/components/messages/ArtifactLinkedEvent"
+  helix:{tenant_id}:ecosystem.bootstrapped:
+    description: Channel for EcosystemBootstrappedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishEcosystemBootstrappedEvent
+      message:
+        $ref: "#/components/messages/EcosystemBootstrappedEvent"
+  helix:{tenant_id}:persona.discovered:
+    description: Channel for PersonaDiscoveredEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishPersonaDiscoveredEvent
+      message:
+        $ref: "#/components/messages/PersonaDiscoveredEvent"
+  helix:{tenant_id}:persona.registered:
+    description: Channel for PersonaRegisteredEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishPersonaRegisteredEvent
+      message:
+        $ref: "#/components/messages/PersonaRegisteredEvent"
+  helix:{tenant_id}:artifact.created:
+    description: Channel for ArtifactCreatedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishArtifactCreatedEvent
+      message:
+        $ref: "#/components/messages/ArtifactCreatedEvent"
+  helix:{tenant_id}:conflict.detected:
+    description: Channel for ConflictDetectedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishConflictDetectedEvent
+      message:
+        $ref: "#/components/messages/ConflictDetectedEvent"
+  helix:{tenant_id}:sharedkernel.created:
+    description: Channel for SharedKernelCreatedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishSharedKernelCreatedEvent
+      message:
+        $ref: "#/components/messages/SharedKernelCreatedEvent"
+  helix:{tenant_id}:gate.requested:
+    description: Channel for GateRequestedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishGateRequestedEvent
+      message:
+        $ref: "#/components/messages/GateRequestedEvent"
+  helix:{tenant_id}:gate.approved:
+    description: Channel for GateApprovedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishGateApprovedEvent
+      message:
+        $ref: "#/components/messages/GateApprovedEvent"
+  helix:{tenant_id}:layer.generated:
+    description: Channel for LayerGeneratedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishLayerGeneratedEvent
+      message:
+        $ref: "#/components/messages/LayerGeneratedEvent"
+  helix:{tenant_id}:drift.detected:
+    description: Channel for DriftDetectedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishDriftDetectedEvent
+      message:
+        $ref: "#/components/messages/DriftDetectedEvent"
+  helix:{tenant_id}:fitness.failed:
+    description: Channel for FitnessCheckFailedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishFitnessCheckFailedEvent
+      message:
+        $ref: "#/components/messages/FitnessCheckFailedEvent"
+  helix:{tenant_id}:security.proof.completed:
+    description: Channel for SecurityProofCompletedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishSecurityProofCompletedEvent
+      message:
+        $ref: "#/components/messages/SecurityProofCompletedEvent"
+  helix:{tenant_id}:artifact.regenerated:
+    description: Channel for ArtifactRegeneratedEvent
+    parameters:
+      tenant_id:
+        description: Tenant identifier
+        schema:
+          type: string
+    publish:
+      operationId: publishArtifactRegeneratedEvent
+      message:
+        $ref: "#/components/messages/ArtifactRegeneratedEvent"
+components:
+  schemas:
+    LinkEventPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.linked"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/RelationshipInfo"
+        timestamp:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - timestamp
+    EcosystemBootstrappedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"ecosystem.bootstrapped"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        foundingIntent:
+          type: string
+        domain:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - namespace
+        - foundingIntent
+        - domain
+    PersonaDiscoveredPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"persona.discovered"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        count:
+          type: integer
+        personas:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - count
+        - personas
+    PersonaRegisteredPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"persona.registered"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - name
+    RequirementSubmittedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.created"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: '#/components/schemas/"req"'
+        artifactType:
+          $ref: "#/components/schemas/RequirementType"
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - layer
+        - artifactType
+    ConflictDetectedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"conflict.detected"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        requirement1Uid:
+          $ref: "#/components/schemas/UID"
+        requirement2Uid:
+          $ref: "#/components/schemas/UID"
+        conflictType:
+          $ref: "#/components/schemas/ConflictType"
+        severity:
+          $ref: "#/components/schemas/ConflictSeverity"
+      required:
+        - type
+        - tenantId
+        - payload
+        - requirement1Uid
+        - requirement2Uid
+        - conflictType
+        - severity
+    SharedKernelCreatedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"sharedkernel.created"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        entity:
+          type: string
+        personas:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - entity
+        - personas
+    ArtifactCreatedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.created"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifactType:
+          type: string
+        parentUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - layer
+        - artifactType
+        - parentUid
+    GateRequestedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"gate.requested"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        gateId:
+          type: string
+        gateNumber:
+          $ref: "#/components/schemas/GateNumber"
+        gateName:
+          type: string
+        artifactCount:
+          type: integer
+        timeoutAt:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - gateId
+        - gateNumber
+        - gateName
+        - artifactCount
+        - timeoutAt
+    GateApprovedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"gate.approved"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        gateId:
+          type: string
+        gateNumber:
+          $ref: "#/components/schemas/GateNumber"
+        approvedBy:
+          type: string
+        approvedAt:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - gateId
+        - gateNumber
+        - approvedBy
+        - approvedAt
+    LayerGeneratedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"layer.generated"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifactCount:
+          type: integer
+      required:
+        - type
+        - tenantId
+        - payload
+        - layer
+        - artifactCount
+    DriftDetectedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"drift.detected"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        artifactUid:
+          $ref: "#/components/schemas/UID"
+        driftType:
+          $ref: "#/components/schemas/DriftType"
+        severity:
+          $ref: "#/components/schemas/DriftSeverity"
+      required:
+        - type
+        - tenantId
+        - payload
+        - artifactUid
+        - driftType
+        - severity
+    FitnessCheckFailedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"fitness.failed"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        functionName:
+          type: string
+        violationCount:
+          type: integer
+      required:
+        - type
+        - tenantId
+        - payload
+        - functionName
+        - violationCount
+    SecurityProofCompletedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"security.proof.completed"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        policyType:
+          $ref: "#/components/schemas/PolicyType"
+        status:
+          $ref: "#/components/schemas/Z3Status"
+        property:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - policyType
+        - status
+        - property
+    ArtifactRegeneratedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.regenerated"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        strategy:
+          $ref: "#/components/schemas/RegenerationStrategy"
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - strategy
+  messages:
+    ArtifactLinkedEvent:
+      name: ArtifactLinkedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/LinkEventPayload"
+    EcosystemBootstrappedEvent:
+      name: EcosystemBootstrappedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/EcosystemBootstrappedPayload"
+    PersonaDiscoveredEvent:
+      name: PersonaDiscoveredEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/PersonaDiscoveredPayload"
+    PersonaRegisteredEvent:
+      name: PersonaRegisteredEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/PersonaRegisteredPayload"
+    RequirementSubmittedEvent:
+      name: RequirementSubmittedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/RequirementSubmittedPayload"
+    ConflictDetectedEvent:
+      name: ConflictDetectedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ConflictDetectedPayload"
+    SharedKernelCreatedEvent:
+      name: SharedKernelCreatedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/SharedKernelCreatedPayload"
+    ArtifactCreatedEvent:
+      name: ArtifactCreatedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ArtifactCreatedPayload"
+    GateRequestedEvent:
+      name: GateRequestedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/GateRequestedPayload"
+    GateApprovedEvent:
+      name: GateApprovedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/GateApprovedPayload"
+    LayerGeneratedEvent:
+      name: LayerGeneratedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/LayerGeneratedPayload"
+    DriftDetectedEvent:
+      name: DriftDetectedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/DriftDetectedPayload"
+    FitnessCheckFailedEvent:
+      name: FitnessCheckFailedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/FitnessCheckFailedPayload"
+    SecurityProofCompletedEvent:
+      name: SecurityProofCompletedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/SecurityProofCompletedPayload"
+    ArtifactRegeneratedEvent:
+      name: ArtifactRegeneratedEvent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ArtifactRegeneratedPayload"

@@ -1,0 +1,3811 @@
+openapi: 3.0.3
+info:
+  title: Helix MCP API
+  version: 1.0.0
+  description: Complete API for the Helix Cascading Persona Ecosystem - 5
+    federated MCP servers
+paths:
+  /helix-graph/cpe/query_graph:
+    post:
+      operationId: queryGraph
+      summary: Execute Cypher queries against Knowledge Graph
+      tags:
+        - graph
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/query-graph`
+        Serves: PLATFORM-ADMIN, DEVELOPER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryGraphRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/QueryGraphResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-graph/cpe/link_artifacts:
+    post:
+      operationId: linkArtifacts
+      summary: Create trace relationships between artifacts
+      tags:
+        - graph
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/link-artifacts`
+        Serves: SYSTEM, CASCADE-ENGINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LinkArtifactsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/LinkArtifactsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-graph/cpe/trace_impact:
+    post:
+      operationId: traceImpact
+      summary: Analyze blast radius of artifact changes
+      tags:
+        - graph
+      description: |-
+        INFORMATION_HOLDER_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/trace-impact`
+        Serves: PLATFORM-ADMIN, DEVELOPER, ARCHITECT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TraceImpactRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TraceImpactResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-graph/cpe/get_lineage:
+    post:
+      operationId: getLineage
+      summary: Trace artifact lineage to Founding Intent
+      tags:
+        - graph
+      description: |-
+        INFORMATION_HOLDER_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/get-lineage`
+        Serves: AUDITOR, COMPLIANCE-OFFICER, DEVELOPER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetLineageRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GetLineageResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-discovery/cpe/bootstrap_ecosystem:
+    post:
+      operationId: bootstrapEcosystem
+      summary: Initialize ecosystem from founding intent (Big Bang tool)
+      tags:
+        - discovery
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/bootstrap-ecosystem`
+        Serves: PLATFORM-ADMIN, TENANT-ADMIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BootstrapEcosystemRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/BootstrapEcosystemResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-discovery/cpe/discover_personas:
+    post:
+      operationId: discoverPersonas
+      summary: Execute Discovery Triad for persona identification
+      tags:
+        - discovery
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/discover-personas`
+        Serves: SYSTEM, DISCOVERY-ENGINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscoverPersonasRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/DiscoverPersonasResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-discovery/cpe/register_persona:
+    post:
+      operationId: registerPersona
+      summary: Register validated persona in Knowledge Graph
+      tags:
+        - discovery
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/register-persona`
+        Serves: PLATFORM-ADMIN, TENANT-ADMIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterPersonaRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/RegisterPersonaResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-discovery/cpe/mad_debate:
+    post:
+      operationId: madDebate
+      summary: Execute Multi-Agent Debate for persona refinement
+      tags:
+        - discovery
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/mad-debate`
+        Serves: SYSTEM, DISCOVERY-ENGINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MADDebateRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/MADDebateResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-derivation/cpe/derive_intents:
+    post:
+      operationId: deriveIntents
+      summary: Generate mini-PRD of intents for a persona
+      tags:
+        - derivation
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/derive-intents`
+        Serves: PRODUCT-MANAGER, BUSINESS-ANALYST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeriveIntentsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/DeriveIntentsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-derivation/cpe/submit_requirement:
+    post:
+      operationId: submitRequirement
+      summary: Submit CML requirement with semantic validation
+      tags:
+        - derivation
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/submit-requirement`
+        Serves: PRODUCT-MANAGER, BUSINESS-ANALYST, DEVELOPER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitRequirementRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/SubmitRequirementResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-derivation/cpe/detect_conflicts:
+    post:
+      operationId: detectConflicts
+      summary: Detect conflicts between requirements via pairwise analysis
+      tags:
+        - derivation
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/detect-conflicts`
+        Serves: ARCHITECT, PRODUCT-MANAGER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DetectConflictsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/DetectConflictsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-derivation/cpe/synthesize_cross_persona:
+    post:
+      operationId: synthesizeCrossPersona
+      summary: Create unified entities with persona-specific views
+      tags:
+        - derivation
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/synthesize-cross-persona`
+        Serves: ARCHITECT, DOMAIN-EXPERT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SynthesizeCrossPersonaRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/SynthesizeCrossPersonaResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-derivation/cpe/suggest_bounded_contexts:
+    post:
+      operationId: suggestBoundedContexts
+      summary: Suggest bounded contexts using Service Cutter principles
+      tags:
+        - derivation
+      description: |-
+        INFORMATION_HOLDER_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/suggest-bounded-contexts`
+        Serves: ARCHITECT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuggestBoundedContextsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/SuggestBoundedContextsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/generate_artifact:
+    post:
+      operationId: generateArtifact
+      summary: Generate single artifact with orphan prevention and traceability
+      tags:
+        - cascade
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/generate-artifact`
+        Serves: CASCADE-ENGINE, DEVELOPER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateArtifactRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GenerateArtifactResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/generate_layer:
+    post:
+      operationId: generateLayer
+      summary: Batch generate entire layer from parent layer
+      tags:
+        - cascade
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/generate-layer`
+        Serves: CASCADE-ENGINE, ARCHITECT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateLayerRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GenerateLayerResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/inject_tenant_policy:
+    post:
+      operationId: injectTenantPolicy
+      summary: Auto-inject tenant isolation policies (RLS/RBAC)
+      tags:
+        - cascade
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/inject-tenant-policy`
+        Serves: SECURITY-ENGINEER, ARCHITECT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InjectTenantPolicyRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InjectTenantPolicyResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/request_gate_approval:
+    post:
+      operationId: requestGateApproval
+      summary: Request human approval at workflow gate
+      tags:
+        - cascade
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/request-gate-approval`
+        Serves: CASCADE-ENGINE, PLATFORM-ADMIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestGateApprovalRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/RequestGateApprovalResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/check_gate_status:
+    post:
+      operationId: checkGateStatus
+      summary: Check if gate has been approved
+      tags:
+        - cascade
+      description: |-
+        INFORMATION_HOLDER_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/check-gate-status`
+        Serves: CASCADE-ENGINE, PLATFORM-ADMIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckGateStatusRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/CheckGateStatusResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/generate_role_based_views:
+    post:
+      operationId: generateRoleBasedViews
+      summary: Generate persona-specific UI views for entity
+      tags:
+        - cascade
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/generate-role-based-views`
+        Serves: DEVELOPER, UX-DESIGNER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateRoleBasedViewsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GenerateRoleBasedViewsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-cascade/cpe/generate_persona_specific_docs:
+    post:
+      operationId: generatePersonaDocs
+      summary: Generate tailored documentation for persona
+      tags:
+        - cascade
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/generate-persona-docs`
+        Serves: TECHNICAL-WRITER, PRODUCT-MANAGER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GeneratePersonaDocsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GeneratePersonaDocsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/verify_drift:
+    post:
+      operationId: verifyDrift
+      summary: Detect drift between specification and implementation
+      tags:
+        - verification
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/verify-drift`
+        Serves: PLATFORM-ADMIN, DEVOPS, CI-PIPELINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyDriftRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/VerifyDriftResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/prove_security_policy:
+    post:
+      operationId: proveSecurityPolicy
+      summary: Generate SMT proofs for security policies using Z3
+      tags:
+        - verification
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/prove-security-policy`
+        Serves: SECURITY-ENGINEER, COMPLIANCE-OFFICER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProveSecurityPolicyRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ProveSecurityPolicyResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/run_fitness_functions:
+    post:
+      operationId: runFitnessFunctions
+      summary: Run ArchUnit-style fitness functions for architectural verification
+      tags:
+        - verification
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/run-fitness-functions`
+        Serves: ARCHITECT, PLATFORM-ADMIN, CI-PIPELINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RunFitnessFunctionsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/RunFitnessFunctionsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/verify_coverage:
+    post:
+      operationId: verifyCoverage
+      summary: Analyze traceability coverage and find orphans
+      tags:
+        - verification
+      description: |-
+        INFORMATION_HOLDER_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/verify-coverage`
+        Serves: PRODUCT-MANAGER, ARCHITECT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyCoverageRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/VerifyCoverageResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/regenerate_artifacts:
+    post:
+      operationId: regenerateArtifacts
+      summary: Targeted regeneration of drifted artifacts
+      tags:
+        - verification
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/regenerate-artifacts`
+        Serves: PLATFORM-ADMIN, CASCADE-ENGINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegenerateArtifactsRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/RegenerateArtifactsResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/generate_gdpr_article_30:
+    post:
+      operationId: generateGDPRArticle30
+      summary: Generate GDPR Article 30 records of processing activities
+      tags:
+        - verification
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/generate-gdpr-article-30`
+        Serves: DPO, COMPLIANCE-OFFICER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateGDPRArticle30Request"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GenerateGDPRArticle30Response"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/generate_audit_evidence:
+    post:
+      operationId: generateAuditEvidence
+      summary: Generate compliance audit evidence for framework
+      tags:
+        - verification
+      description: |-
+        PROCESSING_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/generate-audit-evidence`
+        Serves: AUDITOR, COMPLIANCE-OFFICER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateAuditEvidenceRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/GenerateAuditEvidenceResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+  /helix-verification/cpe/analyze_impact:
+    post:
+      operationId: analyzeImpact
+      summary: Analyze impact of changes across ecosystem
+      tags:
+        - verification
+      description: |-
+        INFORMATION_HOLDER_RESOURCE endpoint.
+
+        UID: `cpe:helix/api/endpoint/SYSTEM/analyze-impact`
+        Serves: ARCHITECT, PRODUCT-MANAGER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyzeImpactRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/AnalyzeImpactResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    UID:
+      type: string
+    TenantID:
+      type: string
+    CypherQuery:
+      type: string
+    LayerCode:
+      type: string
+      enum:
+        - persona
+        - biz
+        - req
+        - des
+        - arc
+        - api
+        - dat
+        - sec
+        - imp
+        - tst
+        - cmp
+        - inf
+        - doc
+    RelationshipType:
+      type: string
+      enum:
+        - derives-from
+        - implements
+        - tests
+        - documents
+        - conflicts-with
+        - shares-with
+        - depends-on
+        - versioned-from
+    QueryParams:
+      type: object
+      properties: {}
+    QueryGraphRequest:
+      type: object
+      properties:
+        cypher:
+          $ref: "#/components/schemas/CypherQuery"
+        params:
+          $ref: "#/components/schemas/QueryParams"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        read_only:
+          type: boolean
+      required:
+        - cypher
+        - tenant_id
+    QueryGraphResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        recordCount:
+          type: integer
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/QueryRecord"
+      required:
+        - success
+        - recordCount
+        - records
+    QueryRecord:
+      type: object
+      properties: {}
+    LinkArtifactsRequest:
+      type: object
+      properties:
+        source_uid:
+          $ref: "#/components/schemas/UID"
+        target_uid:
+          $ref: "#/components/schemas/UID"
+        relationship_type:
+          $ref: "#/components/schemas/RelationshipType"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        properties:
+          type: object
+      required:
+        - source_uid
+        - target_uid
+        - relationship_type
+        - tenant_id
+    LinkArtifactsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        relationship:
+          $ref: "#/components/schemas/RelationshipInfo"
+      required:
+        - success
+        - message
+        - relationship
+    RelationshipInfo:
+      type: object
+      properties:
+        source:
+          $ref: "#/components/schemas/UID"
+        target:
+          $ref: "#/components/schemas/UID"
+        type:
+          $ref: "#/components/schemas/RelationshipType"
+      required:
+        - source
+        - target
+        - type
+    TraceImpactRequest:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        max_depth:
+          type: integer
+        include_tests:
+          type: boolean
+        group_by_layer:
+          type: boolean
+      required:
+        - uid
+        - tenant_id
+    TraceImpactResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        source:
+          $ref: "#/components/schemas/ArtifactRef"
+        impact:
+          $ref: "#/components/schemas/ImpactSummary"
+        criticalPaths:
+          type: array
+          items:
+            $ref: "#/components/schemas/ArtifactRef"
+        byLayer:
+          $ref: "#/components/schemas/LayerArtifacts"
+      required:
+        - success
+        - source
+        - impact
+        - criticalPaths
+    ImpactSummary:
+      type: object
+      properties:
+        totalAffected:
+          type: integer
+        criticalPathCount:
+          type: integer
+        maxDistance:
+          type: integer
+      required:
+        - totalAffected
+        - criticalPathCount
+        - maxDistance
+    ArtifactRef:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        name:
+          type: string
+      required:
+        - uid
+        - layer
+        - name
+    LayerArtifacts:
+      type: object
+      properties: {}
+    GetLineageRequest:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        include_content:
+          type: boolean
+      required:
+        - uid
+        - tenant_id
+    GetLineageResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        artifact:
+          $ref: "#/components/schemas/ArtifactWithLayer"
+        lineage:
+          $ref: "#/components/schemas/LineageInfo"
+        chain:
+          type: array
+          items:
+            $ref: "#/components/schemas/LineageNode"
+      required:
+        - success
+        - artifact
+        - lineage
+        - chain
+    ArtifactWithLayer:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        layerName:
+          type: string
+      required:
+        - uid
+        - layer
+        - layerName
+    LineageInfo:
+      type: object
+      properties:
+        depth:
+          type: integer
+        hasValidRoot:
+          type: boolean
+        root:
+          $ref: "#/components/schemas/ArtifactRef"
+        gaps:
+          type: array
+          items:
+            type: string
+      required:
+        - depth
+        - hasValidRoot
+    LineageNode:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        content:
+          type: object
+      required:
+        - uid
+        - layer
+        - name
+        - type
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+      required:
+        - success
+        - error
+    LinkEventPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.linked"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/RelationshipInfo"
+        timestamp:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - timestamp
+    Namespace:
+      type: string
+    PersonaCategory:
+      type: string
+      enum:
+        - internal_platform
+        - b2b_customer
+        - b2c_end_user
+        - external_stakeholder
+    PersonaType:
+      type: string
+      enum:
+        - internal
+        - b2b
+        - b2c
+        - compliance
+        - operational
+    AccessLevel:
+      type: string
+      enum:
+        - platform
+        - tenant-scoped
+        - user-scoped
+    TenantModel:
+      type: string
+      enum:
+        - pooled
+        - bridge
+        - siloed
+    DiscoveryMethod:
+      type: string
+      enum:
+        - CoT
+        - MAD
+        - OG-RAG
+    DataSovereignty:
+      type: object
+      properties:
+        retention:
+          type: string
+        jurisdiction:
+          type: string
+        rightToErasure:
+          type: boolean
+      required:
+        - retention
+        - jurisdiction
+        - rightToErasure
+    PersonaHint:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+        category:
+          type: string
+          enum:
+            - primary
+            - secondary
+            - supporting
+      required:
+        - name
+        - role
+        - category
+    DomainAnalysis:
+      type: object
+      properties:
+        domain:
+          type: string
+        subDomains:
+          type: array
+          items:
+            type: string
+        coreCapabilities:
+          type: array
+          items:
+            type: string
+        suggestedBoundedContexts:
+          type: array
+          items:
+            type: string
+        complianceRequirements:
+          type: array
+          items:
+            type: string
+        tenantModel:
+          $ref: "#/components/schemas/TenantModel"
+        initialPersonaHints:
+          type: array
+          items:
+            $ref: "#/components/schemas/PersonaHint"
+      required:
+        - domain
+        - subDomains
+        - coreCapabilities
+        - suggestedBoundedContexts
+        - complianceRequirements
+        - tenantModel
+        - initialPersonaHints
+    DiscoveredPersona:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          $ref: "#/components/schemas/PersonaCategory"
+        type:
+          $ref: "#/components/schemas/PersonaType"
+        priority:
+          type: integer
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        intent:
+          type: string
+        goals:
+          type: array
+          items:
+            type: string
+        constraints:
+          type: array
+          items:
+            type: string
+        vocabulary:
+          type: array
+          items:
+            type: string
+        accessibilityProfile:
+          type: string
+        dataSovereignty:
+          $ref: "#/components/schemas/DataSovereignty"
+        coverageRationale:
+          type: string
+        discoverySource:
+          type: string
+        confidence:
+          type: number
+      required:
+        - name
+        - category
+        - type
+        - priority
+        - accessLevel
+        - intent
+        - goals
+        - constraints
+        - vocabulary
+        - dataSovereignty
+        - coverageRationale
+        - discoverySource
+        - confidence
+    GateInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          $ref: "#/components/schemas/GateNumber"
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/GateStatus"
+        artifactCount:
+          type: integer
+        timeoutAt:
+          type: string
+      required:
+        - id
+        - number
+        - name
+        - status
+    BootstrapEcosystemRequest:
+      type: object
+      properties:
+        founding_intent:
+          type: string
+        domain_hints:
+          type: array
+          items:
+            type: string
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+      required:
+        - founding_intent
+        - tenant_id
+        - namespace
+    BootstrapEcosystemResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        ecosystem:
+          $ref: "#/components/schemas/EcosystemInfo"
+        domainAnalysis:
+          $ref: "#/components/schemas/DomainAnalysis"
+        nextSteps:
+          type: array
+          items:
+            type: string
+        hints:
+          $ref: "#/components/schemas/BootstrapHints"
+      required:
+        - success
+        - message
+        - ecosystem
+        - domainAnalysis
+        - nextSteps
+        - hints
+    EcosystemInfo:
+      type: object
+      properties:
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        foundingIntent:
+          type: string
+        intentUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - tenantId
+        - namespace
+        - foundingIntent
+        - intentUid
+    BootstrapHints:
+      type: object
+      properties:
+        suggestedPersonas:
+          type: array
+          items:
+            $ref: "#/components/schemas/PersonaHint"
+        boundedContexts:
+          type: array
+          items:
+            type: string
+        complianceConsiderations:
+          type: array
+          items:
+            type: string
+      required:
+        - suggestedPersonas
+        - boundedContexts
+        - complianceConsiderations
+    DiscoverPersonasRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        use_mad:
+          type: boolean
+        use_og_rag:
+          type: boolean
+        max_personas:
+          type: integer
+      required:
+        - tenant_id
+    DiscoverPersonasResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        discovery:
+          $ref: "#/components/schemas/DiscoveryInfo"
+        personas:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiscoveredPersona"
+        summary:
+          $ref: "#/components/schemas/DiscoverySummary"
+        madValidation:
+          $ref: "#/components/schemas/MADValidationResult"
+        gate:
+          $ref: "#/components/schemas/GateInfo"
+        nextSteps:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - message
+        - discovery
+        - personas
+        - summary
+        - gate
+        - nextSteps
+    DiscoveryInfo:
+      type: object
+      properties:
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        foundingIntent:
+          type: string
+        domain:
+          type: string
+        methods:
+          $ref: "#/components/schemas/DiscoveryMethods"
+      required:
+        - tenantId
+        - namespace
+        - foundingIntent
+        - domain
+        - methods
+    DiscoveryMethods:
+      type: object
+      properties:
+        cot:
+          type: boolean
+        mad:
+          type: boolean
+        ogRag:
+          type: boolean
+      required:
+        - cot
+        - mad
+        - ogRag
+    DiscoverySummary:
+      type: object
+      properties:
+        total:
+          type: integer
+        byCategory:
+          $ref: "#/components/schemas/CategoryCounts"
+        byType:
+          $ref: "#/components/schemas/TypeCounts"
+        byAccessLevel:
+          $ref: "#/components/schemas/AccessLevelCounts"
+      required:
+        - total
+        - byCategory
+        - byType
+        - byAccessLevel
+    CategoryCounts:
+      type: object
+      properties:
+        internalPlatform:
+          type: integer
+        b2bCustomer:
+          type: integer
+        b2cEndUser:
+          type: integer
+        externalStakeholder:
+          type: integer
+      required:
+        - internalPlatform
+        - b2bCustomer
+        - b2cEndUser
+        - externalStakeholder
+    TypeCounts:
+      type: object
+      properties: {}
+    AccessLevelCounts:
+      type: object
+      properties:
+        platform:
+          type: integer
+        tenantScoped:
+          type: integer
+        userScoped:
+          type: integer
+      required:
+        - platform
+        - tenantScoped
+        - userScoped
+    MADValidationResult:
+      type: object
+      properties:
+        validated:
+          type: boolean
+        adjustments:
+          type: array
+          items:
+            type: string
+      required:
+        - validated
+        - adjustments
+    RegisterPersonaRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        name:
+          type: string
+        role:
+          type: string
+        description:
+          type: string
+        goals:
+          type: array
+          items:
+            type: string
+        pain_points:
+          type: array
+          items:
+            type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        data_access:
+          type: array
+          items:
+            type: string
+        frequency:
+          type: string
+          enum:
+            - daily
+            - weekly
+            - monthly
+            - occasionally
+        is_primary:
+          type: boolean
+      required:
+        - tenant_id
+        - namespace
+        - name
+        - role
+        - description
+        - goals
+        - pain_points
+        - frequency
+    RegisterPersonaResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        persona:
+          $ref: "#/components/schemas/RegisteredPersonaInfo"
+      required:
+        - success
+        - message
+        - persona
+    RegisteredPersonaInfo:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+        role:
+          type: string
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+      required:
+        - uid
+        - name
+        - role
+        - tenantId
+    MADDebateRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        persona_candidates:
+          type: array
+          items:
+            $ref: "#/components/schemas/PersonaCandidate"
+        max_rounds:
+          type: integer
+        consensus_threshold:
+          type: number
+      required:
+        - tenant_id
+        - persona_candidates
+    PersonaCandidate:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - role
+    MADDebateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        rounds:
+          type: array
+          items:
+            $ref: "#/components/schemas/MADRound"
+        consensus:
+          $ref: "#/components/schemas/ConsensusResult"
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/MADRecommendation"
+      required:
+        - success
+        - rounds
+        - consensus
+        - recommendations
+    MADRound:
+      type: object
+      properties:
+        roundNumber:
+          type: integer
+        businessAnalyst:
+          $ref: "#/components/schemas/AgentOpinion"
+        uxResearcher:
+          $ref: "#/components/schemas/AgentOpinion"
+        domainExpert:
+          $ref: "#/components/schemas/AgentOpinion"
+        judgeVerdict:
+          type: string
+      required:
+        - roundNumber
+        - businessAnalyst
+        - uxResearcher
+        - domainExpert
+        - judgeVerdict
+    AgentOpinion:
+      type: object
+      properties:
+        position:
+          type: string
+        rationale:
+          type: string
+        confidence:
+          type: number
+      required:
+        - position
+        - rationale
+        - confidence
+    ConsensusResult:
+      type: object
+      properties:
+        reached:
+          type: boolean
+        threshold:
+          type: number
+        score:
+          type: number
+      required:
+        - reached
+        - threshold
+        - score
+    MADRecommendation:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+            - add
+            - remove
+            - merge
+            - split
+            - modify
+        persona:
+          type: string
+        rationale:
+          type: string
+      required:
+        - action
+        - persona
+        - rationale
+    EcosystemBootstrappedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"ecosystem.bootstrapped"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        foundingIntent:
+          type: string
+        domain:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - namespace
+        - foundingIntent
+        - domain
+    PersonaDiscoveredPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"persona.discovered"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        count:
+          type: integer
+        personas:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - count
+        - personas
+    PersonaRegisteredPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"persona.registered"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - name
+    RequirementType:
+      type: string
+      enum:
+        - story
+        - epic
+        - feature
+        - nfr
+    MoSCoWPriority:
+      type: string
+      enum:
+        - must
+        - should
+        - could
+        - wont
+    ConflictType:
+      type: string
+      enum:
+        - resource-contention
+        - semantic-contradiction
+        - temporal-conflict
+        - priority-conflict
+    ConflictSeverity:
+      type: string
+      enum:
+        - critical
+        - high
+        - medium
+        - low
+    QualityAttributes:
+      type: object
+      properties:
+        promotes:
+          type: array
+          items:
+            type: string
+        harms:
+          type: array
+          items:
+            type: string
+      required:
+        - promotes
+        - harms
+    DerivedIntent:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: "#/components/schemas/RequirementType"
+        cml:
+          type: string
+        priority:
+          $ref: "#/components/schemas/MoSCoWPriority"
+        derivedFrom:
+          type: string
+          enum:
+            - goal
+            - constraint
+        sourceIndex:
+          type: integer
+        acceptanceCriteria:
+          type: array
+          items:
+            type: string
+        qualityAttributes:
+          $ref: "#/components/schemas/QualityAttributes"
+      required:
+        - name
+        - type
+        - cml
+        - priority
+        - derivedFrom
+        - sourceIndex
+        - acceptanceCriteria
+        - qualityAttributes
+    ParsedCML:
+      type: object
+      properties:
+        name:
+          type: string
+        asA:
+          type: string
+        iWant:
+          type: string
+        withFeatures:
+          type: array
+          items:
+            type: string
+        soThat:
+          type: string
+        promotes:
+          type: array
+          items:
+            type: string
+        harms:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - asA
+        - iWant
+        - withFeatures
+        - soThat
+        - promotes
+        - harms
+    DeriveIntentsRequest:
+      type: object
+      properties:
+        persona_uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        max_intents:
+          type: integer
+        include_nfrs:
+          type: boolean
+      required:
+        - persona_uid
+        - tenant_id
+    DeriveIntentsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        persona:
+          $ref: "#/components/schemas/PersonaInfo"
+        derivation:
+          $ref: "#/components/schemas/DerivationParams"
+        summary:
+          $ref: "#/components/schemas/DerivationSummary"
+        intents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DerivedIntent"
+        nextSteps:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - persona
+        - derivation
+        - summary
+        - intents
+        - nextSteps
+    PersonaInfo:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+        category:
+          type: string
+        type:
+          type: string
+        intent:
+          type: string
+      required:
+        - uid
+        - name
+        - category
+        - type
+        - intent
+    DerivationParams:
+      type: object
+      properties:
+        goalsCount:
+          type: integer
+        constraintsCount:
+          type: integer
+        maxIntents:
+          type: integer
+        includeNfrs:
+          type: boolean
+      required:
+        - goalsCount
+        - constraintsCount
+        - maxIntents
+        - includeNfrs
+    DerivationSummary:
+      type: object
+      properties:
+        totalIntents:
+          type: integer
+        fromGoals:
+          type: integer
+        fromConstraints:
+          type: integer
+        nfrs:
+          type: integer
+        byPriority:
+          $ref: "#/components/schemas/PriorityCounts"
+      required:
+        - totalIntents
+        - fromGoals
+        - fromConstraints
+        - nfrs
+        - byPriority
+    PriorityCounts:
+      type: object
+      properties:
+        must:
+          type: integer
+        should:
+          type: integer
+        could:
+          type: integer
+        wont:
+          type: integer
+      required:
+        - must
+        - should
+        - could
+        - wont
+    SubmitRequirementRequest:
+      type: object
+      properties:
+        cml:
+          type: string
+        persona_uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        requirement_type:
+          $ref: "#/components/schemas/RequirementType"
+        priority:
+          $ref: "#/components/schemas/MoSCoWPriority"
+      required:
+        - cml
+        - persona_uid
+        - tenant_id
+        - namespace
+    SubmitRequirementResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        requirement:
+          $ref: "#/components/schemas/CreatedRequirement"
+        parsed:
+          $ref: "#/components/schemas/ParsedCML"
+      required:
+        - success
+        - requirement
+        - parsed
+    CreatedRequirement:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+        type:
+          $ref: "#/components/schemas/RequirementType"
+        priority:
+          $ref: "#/components/schemas/MoSCoWPriority"
+        derivesFrom:
+          $ref: "#/components/schemas/UID"
+      required:
+        - uid
+        - name
+        - type
+        - priority
+        - derivesFrom
+    DetectConflictsRequest:
+      type: object
+      properties:
+        requirement_uids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        conflict_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConflictType"
+      required:
+        - requirement_uids
+        - tenant_id
+    DetectConflictsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        analysis:
+          $ref: "#/components/schemas/ConflictAnalysisParams"
+        requirements:
+          type: array
+          items:
+            $ref: "#/components/schemas/RequirementSummary"
+        conflicts:
+          type: array
+          items:
+            $ref: "#/components/schemas/DetectedConflict"
+        summary:
+          $ref: "#/components/schemas/ConflictSummary"
+        recommendation:
+          type: string
+        nextSteps:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - analysis
+        - requirements
+        - conflicts
+        - summary
+        - recommendation
+        - nextSteps
+    ConflictAnalysisParams:
+      type: object
+      properties:
+        requirementCount:
+          type: integer
+        pairwiseComparisons:
+          type: integer
+        conflictTypesChecked:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConflictType"
+      required:
+        - requirementCount
+        - pairwiseComparisons
+        - conflictTypesChecked
+    RequirementSummary:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+        personaScope:
+          type: string
+        priority:
+          $ref: "#/components/schemas/MoSCoWPriority"
+      required:
+        - uid
+        - name
+        - personaScope
+        - priority
+    DetectedConflict:
+      type: object
+      properties:
+        id:
+          type: string
+        requirement1:
+          $ref: "#/components/schemas/UID"
+        requirement2:
+          $ref: "#/components/schemas/UID"
+        type:
+          $ref: "#/components/schemas/ConflictType"
+        severity:
+          $ref: "#/components/schemas/ConflictSeverity"
+        description:
+          type: string
+        suggestedResolution:
+          type: string
+        affectedEntities:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - requirement1
+        - requirement2
+        - type
+        - severity
+        - description
+        - suggestedResolution
+    ConflictSummary:
+      type: object
+      properties:
+        totalConflicts:
+          type: integer
+        bySeverity:
+          $ref: "#/components/schemas/SeverityCounts"
+        byType:
+          $ref: "#/components/schemas/TypeCounts"
+      required:
+        - totalConflicts
+        - bySeverity
+        - byType
+    SeverityCounts:
+      type: object
+      properties:
+        critical:
+          type: integer
+        high:
+          type: integer
+        medium:
+          type: integer
+        low:
+          type: integer
+      required:
+        - critical
+        - high
+        - medium
+        - low
+    SynthesizeCrossPersonaRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        entity_name:
+          type: string
+        persona_uids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - tenant_id
+        - entity_name
+        - persona_uids
+    SynthesizeCrossPersonaResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        entity:
+          type: string
+        sharedKernel:
+          $ref: "#/components/schemas/SharedKernel"
+        cml:
+          type: string
+        nextSteps:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - entity
+        - sharedKernel
+        - cml
+        - nextSteps
+    SharedKernel:
+      type: object
+      properties:
+        entity:
+          type: string
+        coreAttributes:
+          type: array
+          items:
+            type: string
+        personaViews:
+          $ref: "#/components/schemas/PersonaViewMap"
+      required:
+        - entity
+        - coreAttributes
+        - personaViews
+    PersonaViewMap:
+      type: object
+      properties: {}
+    PersonaView:
+      type: object
+      properties:
+        dto:
+          type: string
+        visibleAttributes:
+          type: array
+          items:
+            type: string
+        hiddenAttributes:
+          type: array
+          items:
+            type: string
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Permission"
+      required:
+        - dto
+        - visibleAttributes
+        - permissions
+    Permission:
+      type: string
+      enum:
+        - CREATE
+        - READ
+        - UPDATE
+        - DELETE
+        - SUBMIT
+    SuggestBoundedContextsRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        coupling_criteria:
+          type: array
+          items:
+            $ref: "#/components/schemas/CouplingCriterion"
+      required:
+        - tenant_id
+    CouplingCriterion:
+      type: string
+      enum:
+        - semantic_proximity
+        - shared_owner
+        - data_access
+        - security_zone
+        - latency_sensitivity
+    SuggestBoundedContextsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        boundedContexts:
+          type: array
+          items:
+            $ref: "#/components/schemas/BoundedContext"
+        serviceCutterAnalysis:
+          $ref: "#/components/schemas/ServiceCutterResult"
+        cml:
+          type: string
+        nextSteps:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - boundedContexts
+        - serviceCutterAnalysis
+        - cml
+        - nextSteps
+    BoundedContext:
+      type: object
+      properties:
+        name:
+          type: string
+        aggregates:
+          type: array
+          items:
+            type: string
+        entities:
+          type: array
+          items:
+            type: string
+        primaryPersonas:
+          type: array
+          items:
+            type: string
+        couplingScore:
+          type: number
+      required:
+        - name
+        - aggregates
+        - entities
+        - primaryPersonas
+        - couplingScore
+    ServiceCutterResult:
+      type: object
+      properties:
+        analysisMethod:
+          type: string
+        criteriaUsed:
+          type: array
+          items:
+            $ref: "#/components/schemas/CouplingCriterion"
+        confidence:
+          type: number
+      required:
+        - analysisMethod
+        - criteriaUsed
+        - confidence
+    RequirementSubmittedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.created"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: '#/components/schemas/"req"'
+        artifactType:
+          $ref: "#/components/schemas/RequirementType"
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - layer
+        - artifactType
+    ConflictDetectedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"conflict.detected"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        requirement1Uid:
+          $ref: "#/components/schemas/UID"
+        requirement2Uid:
+          $ref: "#/components/schemas/UID"
+        conflictType:
+          $ref: "#/components/schemas/ConflictType"
+        severity:
+          $ref: "#/components/schemas/ConflictSeverity"
+      required:
+        - type
+        - tenantId
+        - payload
+        - requirement1Uid
+        - requirement2Uid
+        - conflictType
+        - severity
+    SharedKernelCreatedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"sharedkernel.created"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        entity:
+          type: string
+        personas:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - entity
+        - personas
+    PersonaArtifactType:
+      type: string
+    BusinessArtifactType:
+      type: string
+      enum:
+        - goal
+        - capability
+        - metric
+    RequirementsArtifactType:
+      type: string
+      enum:
+        - story
+        - epic
+        - feature
+        - nfr
+    DesignArtifactType:
+      type: string
+      enum:
+        - wireframe
+        - mockup
+        - prototype
+        - flow
+    ArchitectureArtifactType:
+      type: string
+      enum:
+        - bounded-context
+        - aggregate
+        - service
+        - component
+    APIArtifactType:
+      type: string
+      enum:
+        - endpoint
+        - schema
+        - contract
+    DataArtifactType:
+      type: string
+      enum:
+        - entity
+        - migration
+        - index
+        - view
+    SecurityArtifactType:
+      type: string
+      enum:
+        - policy
+        - role
+        - permission
+        - rls
+    ImplementationArtifactType:
+      type: string
+      enum:
+        - module
+        - class
+        - function
+        - handler
+    TestingArtifactType:
+      type: string
+      enum:
+        - unit
+        - integration
+        - e2e
+        - contract
+    ComplianceArtifactType:
+      type: string
+      enum:
+        - audit
+        - gdpr
+        - soc2
+        - hipaa
+    InfrastructureArtifactType:
+      type: string
+      enum:
+        - terraform
+        - helm
+        - dockerfile
+        - pipeline
+    DocumentationArtifactType:
+      type: string
+      enum:
+        - readme
+        - api-doc
+        - runbook
+        - adr
+    GateNumber:
+      type: string
+    GateStatus:
+      type: string
+      enum:
+        - pending
+        - approved
+        - rejected
+        - timeout
+    GeneratedContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - code
+            - schema
+            - config
+            - doc
+        content:
+          type: string
+        metadata:
+          $ref: "#/components/schemas/ContentMetadata"
+      required:
+        - type
+        - content
+        - metadata
+    ContentMetadata:
+      type: object
+      properties:
+        language:
+          type: string
+        dependencies:
+          type: array
+          items:
+            type: string
+        exports:
+          type: array
+          items:
+            type: string
+    GenerateArtifactRequest:
+      type: object
+      properties:
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifact_type:
+          type: string
+        parent_uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        context:
+          type: object
+        persona_scope:
+          type: string
+      required:
+        - layer
+        - artifact_type
+        - parent_uid
+        - name
+        - tenant_id
+        - namespace
+    GenerateArtifactResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        artifact:
+          $ref: "#/components/schemas/GeneratedArtifactInfo"
+        generatedContent:
+          $ref: "#/components/schemas/ContentPreview"
+      required:
+        - success
+        - artifact
+        - generatedContent
+    GeneratedArtifactInfo:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifactType:
+          type: string
+        name:
+          type: string
+        parentUid:
+          $ref: "#/components/schemas/UID"
+        traceComment:
+          type: string
+      required:
+        - uid
+        - layer
+        - artifactType
+        - name
+        - parentUid
+        - traceComment
+    ContentPreview:
+      type: object
+      properties:
+        type:
+          type: string
+        preview:
+          type: string
+      required:
+        - type
+        - preview
+    GenerateLayerRequest:
+      type: object
+      properties:
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        parent_layer:
+          $ref: "#/components/schemas/LayerCode"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        filter_persona:
+          type: string
+      required:
+        - layer
+        - parent_layer
+        - tenant_id
+        - namespace
+    GenerateLayerResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        parentLayer:
+          $ref: "#/components/schemas/LayerCode"
+        generated:
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneratedArtifactSummary"
+        summary:
+          $ref: "#/components/schemas/LayerGenerationSummary"
+        nextSteps:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - layer
+        - parentLayer
+        - generated
+        - summary
+        - nextSteps
+    GeneratedArtifactSummary:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        name:
+          type: string
+        artifactType:
+          type: string
+        parentUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - uid
+        - name
+        - artifactType
+        - parentUid
+    LayerGenerationSummary:
+      type: object
+      properties:
+        total:
+          type: integer
+        byType:
+          $ref: "#/components/schemas/ArtifactTypeCounts"
+      required:
+        - total
+        - byType
+    ArtifactTypeCounts:
+      type: object
+      properties: {}
+    InjectTenantPolicyRequest:
+      type: object
+      properties:
+        entity_uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        tenant_model:
+          $ref: "#/components/schemas/TenantModel"
+        policy_type:
+          type: string
+          enum:
+            - rls
+            - rbac
+            - both
+      required:
+        - entity_uid
+        - tenant_id
+        - tenant_model
+        - policy_type
+    InjectTenantPolicyResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        entity:
+          type: string
+        tenantModel:
+          $ref: "#/components/schemas/TenantModel"
+        injectedPolicies:
+          type: array
+          items:
+            $ref: "#/components/schemas/InjectedPolicy"
+        generatedArtifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - success
+        - entity
+        - tenantModel
+        - injectedPolicies
+        - generatedArtifacts
+    InjectedPolicy:
+      type: object
+      properties:
+        type:
+          type: string
+        target:
+          type: string
+        policy:
+          type: string
+      required:
+        - type
+        - target
+        - policy
+    RequestGateApprovalRequest:
+      type: object
+      properties:
+        gate_number:
+          $ref: "#/components/schemas/GateNumber"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        artifact_uids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+        message:
+          type: string
+        timeout_hours:
+          type: integer
+      required:
+        - gate_number
+        - tenant_id
+        - artifact_uids
+    RequestGateApprovalResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        gate:
+          $ref: "#/components/schemas/GateInfo"
+        instructions:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - message
+        - gate
+        - instructions
+    CheckGateStatusRequest:
+      type: object
+      properties:
+        gate_id:
+          type: string
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+      required:
+        - gate_id
+        - tenant_id
+    CheckGateStatusResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        gate:
+          $ref: "#/components/schemas/GateStatusInfo"
+      required:
+        - success
+        - gate
+    GateStatusInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          $ref: "#/components/schemas/GateNumber"
+        name:
+          type: string
+        status:
+          $ref: "#/components/schemas/GateStatus"
+        approvers:
+          type: array
+          items:
+            type: string
+        approvedAt:
+          type: string
+        rejectedReason:
+          type: string
+      required:
+        - id
+        - number
+        - name
+        - status
+    GenerateRoleBasedViewsRequest:
+      type: object
+      properties:
+        entity_uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        persona_uids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - entity_uid
+        - tenant_id
+        - namespace
+        - persona_uids
+    GenerateRoleBasedViewsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        entity:
+          type: string
+        views:
+          type: array
+          items:
+            $ref: "#/components/schemas/PersonaViewInfo"
+        generatedArtifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - success
+        - entity
+        - views
+        - generatedArtifacts
+    PersonaViewInfo:
+      type: object
+      properties:
+        persona:
+          type: string
+        viewUid:
+          $ref: "#/components/schemas/UID"
+        dto:
+          type: string
+        visibleFields:
+          type: array
+          items:
+            type: string
+        hiddenFields:
+          type: array
+          items:
+            type: string
+      required:
+        - persona
+        - viewUid
+        - dto
+        - visibleFields
+        - hiddenFields
+    GeneratePersonaDocsRequest:
+      type: object
+      properties:
+        persona_uid:
+          $ref: "#/components/schemas/UID"
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        namespace:
+          $ref: "#/components/schemas/Namespace"
+        doc_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocType"
+      required:
+        - persona_uid
+        - tenant_id
+        - namespace
+    DocType:
+      type: string
+      enum:
+        - user-guide
+        - api-reference
+        - onboarding
+        - faq
+    GeneratePersonaDocsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        persona:
+          type: string
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneratedDoc"
+        generatedArtifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - success
+        - persona
+        - documents
+        - generatedArtifacts
+    GeneratedDoc:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/DocType"
+        uid:
+          $ref: "#/components/schemas/UID"
+        title:
+          type: string
+        sections:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+        - uid
+        - title
+        - sections
+    ArtifactCreatedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.created"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifactType:
+          type: string
+        parentUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - layer
+        - artifactType
+        - parentUid
+    GateRequestedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"gate.requested"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        gateId:
+          type: string
+        gateNumber:
+          $ref: "#/components/schemas/GateNumber"
+        gateName:
+          type: string
+        artifactCount:
+          type: integer
+        timeoutAt:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - gateId
+        - gateNumber
+        - gateName
+        - artifactCount
+        - timeoutAt
+    GateApprovedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"gate.approved"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        gateId:
+          type: string
+        gateNumber:
+          $ref: "#/components/schemas/GateNumber"
+        approvedBy:
+          type: string
+        approvedAt:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - gateId
+        - gateNumber
+        - approvedBy
+        - approvedAt
+    LayerGeneratedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"layer.generated"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifactCount:
+          type: integer
+      required:
+        - type
+        - tenantId
+        - payload
+        - layer
+        - artifactCount
+    DriftType:
+      type: string
+      enum:
+        - content
+        - structure
+        - relationship
+        - missing
+    DriftSeverity:
+      type: string
+      enum:
+        - critical
+        - high
+        - medium
+        - low
+    VerificationScope:
+      type: string
+      enum:
+        - all
+        - layer
+        - artifact
+    PolicyType:
+      type: string
+      enum:
+        - rbac
+        - rls
+        - isolation
+    Z3Status:
+      type: string
+      enum:
+        - sat
+        - unsat
+        - unknown
+        - error
+    ComplianceFramework:
+      type: string
+      enum:
+        - gdpr
+        - soc2
+        - hipaa
+    RegenerationStrategy:
+      type: string
+      enum:
+        - full
+        - incremental
+        - validation-only
+    VerifyDriftRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        scope:
+          $ref: "#/components/schemas/VerificationScope"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifact_uid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - tenant_id
+        - scope
+    VerifyDriftResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        scope:
+          $ref: "#/components/schemas/DriftScope"
+        summary:
+          $ref: "#/components/schemas/DriftSummary"
+        drift:
+          type: array
+          items:
+            $ref: "#/components/schemas/DriftReport"
+        status:
+          type: string
+          enum:
+            - NO_DRIFT
+            - DRIFT_DETECTED
+        recommendation:
+          type: string
+      required:
+        - success
+        - scope
+        - summary
+        - drift
+        - status
+        - recommendation
+    DriftScope:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/VerificationScope"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        artifactUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - type
+    DriftSummary:
+      type: object
+      properties:
+        totalChecked:
+          type: integer
+        driftDetected:
+          type: integer
+        bySeverity:
+          $ref: "#/components/schemas/SeverityCounts"
+        byType:
+          $ref: "#/components/schemas/DriftTypeCounts"
+      required:
+        - totalChecked
+        - driftDetected
+        - bySeverity
+        - byType
+    DriftTypeCounts:
+      type: object
+      properties:
+        content:
+          type: integer
+        structure:
+          type: integer
+        relationship:
+          type: integer
+        missing:
+          type: integer
+      required:
+        - content
+        - structure
+        - relationship
+        - missing
+    DriftReport:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        driftType:
+          $ref: "#/components/schemas/DriftType"
+        severity:
+          $ref: "#/components/schemas/DriftSeverity"
+        description:
+          type: string
+      required:
+        - uid
+        - layer
+        - driftType
+        - severity
+        - description
+    ProveSecurityPolicyRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        policy_type:
+          $ref: "#/components/schemas/PolicyType"
+        property:
+          type: string
+      required:
+        - tenant_id
+        - policy_type
+    ProveSecurityPolicyResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        proof:
+          $ref: "#/components/schemas/ProofAttempt"
+        result:
+          $ref: "#/components/schemas/Z3Result"
+        counterexample:
+          type: object
+        smtLib:
+          type: string
+        security:
+          type: string
+        recommendation:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - proof
+        - result
+        - smtLib
+        - security
+        - recommendation
+    ProofAttempt:
+      type: object
+      properties:
+        policyType:
+          $ref: "#/components/schemas/PolicyType"
+        property:
+          type: string
+        policiesAnalyzed:
+          type: integer
+        smtGenerated:
+          type: boolean
+        z3Executed:
+          type: boolean
+      required:
+        - policyType
+        - property
+        - policiesAnalyzed
+        - smtGenerated
+        - z3Executed
+    Z3Result:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/Z3Status"
+        message:
+          type: string
+        executionTime:
+          type: integer
+      required:
+        - status
+        - message
+    RunFitnessFunctionsRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        functions:
+          type: array
+          items:
+            type: string
+        fail_fast:
+          type: boolean
+      required:
+        - tenant_id
+    RunFitnessFunctionsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        summary:
+          $ref: "#/components/schemas/FitnessSummary"
+        overallResult:
+          type: string
+          enum:
+            - PASS
+            - FAIL
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/FitnessFunctionResult"
+      required:
+        - success
+        - summary
+        - overallResult
+        - results
+    FitnessSummary:
+      type: object
+      properties:
+        totalRun:
+          type: integer
+        passed:
+          type: integer
+        failed:
+          type: integer
+        totalViolations:
+          type: integer
+      required:
+        - totalRun
+        - passed
+        - failed
+        - totalViolations
+    FitnessFunctionResult:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        passed:
+          type: boolean
+        violationCount:
+          type: integer
+        threshold:
+          type: integer
+        violations:
+          type: array
+          items:
+            type: object
+        executionTimeMs:
+          type: integer
+      required:
+        - name
+        - description
+        - passed
+        - violationCount
+        - threshold
+        - violations
+        - executionTimeMs
+    FitnessFunctionName:
+      type: string
+      enum:
+        - no_orphan_code
+        - all_requirements_tested
+        - persona_coverage
+        - no_cycles
+        - layer_ordering
+    VerifyCoverageRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        include_metrics:
+          type: boolean
+      required:
+        - tenant_id
+    VerifyCoverageResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        coverage:
+          $ref: "#/components/schemas/CoverageReport"
+        orphans:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrphanInfo"
+        gaps:
+          type: array
+          items:
+            $ref: "#/components/schemas/CoverageGap"
+        metrics:
+          $ref: "#/components/schemas/CoverageMetrics"
+      required:
+        - success
+        - coverage
+        - orphans
+        - gaps
+    CoverageReport:
+      type: object
+      properties:
+        totalArtifacts:
+          type: integer
+        coveredArtifacts:
+          type: integer
+        coveragePercent:
+          type: number
+        byLayer:
+          type: array
+          items:
+            $ref: "#/components/schemas/LayerCoverage"
+      required:
+        - totalArtifacts
+        - coveredArtifacts
+        - coveragePercent
+        - byLayer
+    LayerCoverage:
+      type: object
+      properties:
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        total:
+          type: integer
+        covered:
+          type: integer
+        percent:
+          type: number
+      required:
+        - layer
+        - total
+        - covered
+        - percent
+    OrphanInfo:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        name:
+          type: string
+        reason:
+          type: string
+      required:
+        - uid
+        - layer
+        - name
+        - reason
+    CoverageGap:
+      type: object
+      properties:
+        sourceLayer:
+          $ref: "#/components/schemas/LayerCode"
+        targetLayer:
+          $ref: "#/components/schemas/LayerCode"
+        missingCount:
+          type: integer
+        affectedArtifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - sourceLayer
+        - targetLayer
+        - missingCount
+        - affectedArtifacts
+    CoverageMetrics:
+      type: object
+      properties:
+        requirementsCovered:
+          type: number
+        testCoverage:
+          type: number
+        documentationCoverage:
+          type: number
+      required:
+        - requirementsCovered
+        - testCoverage
+        - documentationCoverage
+    RegenerateArtifactsRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        artifact_uids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+        strategy:
+          $ref: "#/components/schemas/RegenerationStrategy"
+        dry_run:
+          type: boolean
+      required:
+        - tenant_id
+        - artifact_uids
+        - strategy
+    RegenerateArtifactsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        strategy:
+          $ref: "#/components/schemas/RegenerationStrategy"
+        dryRun:
+          type: boolean
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/RegenerationResult"
+        summary:
+          $ref: "#/components/schemas/RegenerationSummary"
+      required:
+        - success
+        - strategy
+        - dryRun
+        - results
+        - summary
+    RegenerationResult:
+      type: object
+      properties:
+        uid:
+          $ref: "#/components/schemas/UID"
+        status:
+          type: string
+          enum:
+            - regenerated
+            - validated
+            - skipped
+            - failed
+        changes:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+      required:
+        - uid
+        - status
+    RegenerationSummary:
+      type: object
+      properties:
+        total:
+          type: integer
+        regenerated:
+          type: integer
+        validated:
+          type: integer
+        skipped:
+          type: integer
+        failed:
+          type: integer
+      required:
+        - total
+        - regenerated
+        - validated
+        - skipped
+        - failed
+    GenerateGDPRArticle30Request:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        data_controller:
+          type: string
+        dpo_contact:
+          type: string
+        include_processing_activities:
+          type: boolean
+      required:
+        - tenant_id
+        - data_controller
+        - dpo_contact
+    GenerateGDPRArticle30Response:
+      type: object
+      properties:
+        success:
+          type: boolean
+        record:
+          $ref: "#/components/schemas/GDPRRecord"
+        processingActivities:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProcessingActivity"
+        generatedArtifactUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - success
+        - record
+        - processingActivities
+        - generatedArtifactUid
+    GDPRRecord:
+      type: object
+      properties:
+        dataController:
+          type: string
+        dpoContact:
+          type: string
+        purposes:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        recipients:
+          type: array
+          items:
+            type: string
+        retentionPeriods:
+          type: array
+          items:
+            $ref: "#/components/schemas/RetentionInfo"
+        securityMeasures:
+          type: array
+          items:
+            type: string
+      required:
+        - dataController
+        - dpoContact
+        - purposes
+        - dataCategories
+        - recipients
+        - retentionPeriods
+        - securityMeasures
+    ProcessingActivity:
+      type: object
+      properties:
+        name:
+          type: string
+        purpose:
+          type: string
+        legalBasis:
+          type: string
+        dataSubjects:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        retentionPeriod:
+          type: string
+      required:
+        - name
+        - purpose
+        - legalBasis
+        - dataSubjects
+        - dataCategories
+        - retentionPeriod
+    RetentionInfo:
+      type: object
+      properties:
+        dataCategory:
+          type: string
+        period:
+          type: string
+        justification:
+          type: string
+      required:
+        - dataCategory
+        - period
+        - justification
+    GenerateAuditEvidenceRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        framework:
+          $ref: "#/components/schemas/ComplianceFramework"
+        from_date:
+          type: string
+        to_date:
+          type: string
+        controls:
+          type: array
+          items:
+            type: string
+      required:
+        - tenant_id
+        - framework
+    GenerateAuditEvidenceResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        framework:
+          $ref: "#/components/schemas/ComplianceFramework"
+        period:
+          $ref: "#/components/schemas/AuditPeriod"
+        evidence:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuditEvidence"
+        summary:
+          $ref: "#/components/schemas/AuditSummary"
+        generatedArtifactUid:
+          $ref: "#/components/schemas/UID"
+      required:
+        - success
+        - framework
+        - period
+        - evidence
+        - summary
+        - generatedArtifactUid
+    AuditPeriod:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+      required:
+        - from
+        - to
+    AuditEvidence:
+      type: object
+      properties:
+        control:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - compliant
+            - non-compliant
+            - not-applicable
+        evidence:
+          type: array
+          items:
+            type: string
+        artifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - control
+        - description
+        - status
+        - evidence
+        - artifacts
+    AuditSummary:
+      type: object
+      properties:
+        totalControls:
+          type: integer
+        compliant:
+          type: integer
+        nonCompliant:
+          type: integer
+        notApplicable:
+          type: integer
+        compliancePercent:
+          type: number
+      required:
+        - totalControls
+        - compliant
+        - nonCompliant
+        - notApplicable
+        - compliancePercent
+    AnalyzeImpactRequest:
+      type: object
+      properties:
+        tenant_id:
+          $ref: "#/components/schemas/TenantID"
+        change_type:
+          $ref: "#/components/schemas/ChangeType"
+        affected_uids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+        include_recommendations:
+          type: boolean
+      required:
+        - tenant_id
+        - change_type
+        - affected_uids
+    ChangeType:
+      type: string
+      enum:
+        - requirement_change
+        - schema_change
+        - api_change
+        - security_change
+        - persona_change
+    AnalyzeImpactResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        changeType:
+          $ref: "#/components/schemas/ChangeType"
+        affectedArtifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+        impactAnalysis:
+          $ref: "#/components/schemas/ImpactAnalysis"
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImpactRecommendation"
+      required:
+        - success
+        - changeType
+        - affectedArtifacts
+        - impactAnalysis
+    ImpactAnalysis:
+      type: object
+      properties:
+        directImpact:
+          type: integer
+        transitiveImpact:
+          type: integer
+        byLayer:
+          type: array
+          items:
+            $ref: "#/components/schemas/LayerImpact"
+        criticalPaths:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - directImpact
+        - transitiveImpact
+        - byLayer
+        - criticalPaths
+    LayerImpact:
+      type: object
+      properties:
+        layer:
+          $ref: "#/components/schemas/LayerCode"
+        count:
+          type: integer
+        artifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+      required:
+        - layer
+        - count
+        - artifacts
+    ImpactRecommendation:
+      type: object
+      properties:
+        priority:
+          type: string
+          enum:
+            - high
+            - medium
+            - low
+        action:
+          type: string
+        affectedArtifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/UID"
+        rationale:
+          type: string
+      required:
+        - priority
+        - action
+        - affectedArtifacts
+        - rationale
+    DriftDetectedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"drift.detected"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        artifactUid:
+          $ref: "#/components/schemas/UID"
+        driftType:
+          $ref: "#/components/schemas/DriftType"
+        severity:
+          $ref: "#/components/schemas/DriftSeverity"
+      required:
+        - type
+        - tenantId
+        - payload
+        - artifactUid
+        - driftType
+        - severity
+    FitnessCheckFailedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"fitness.failed"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        functionName:
+          type: string
+        violationCount:
+          type: integer
+      required:
+        - type
+        - tenantId
+        - payload
+        - functionName
+        - violationCount
+    SecurityProofCompletedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"security.proof.completed"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        policyType:
+          $ref: "#/components/schemas/PolicyType"
+        status:
+          $ref: "#/components/schemas/Z3Status"
+        property:
+          type: string
+      required:
+        - type
+        - tenantId
+        - payload
+        - policyType
+        - status
+        - property
+    ArtifactRegeneratedPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/"artifact.regenerated"'
+        tenantId:
+          $ref: "#/components/schemas/TenantID"
+        payload:
+          $ref: "#/components/schemas/{"
+        uid:
+          $ref: "#/components/schemas/UID"
+        strategy:
+          $ref: "#/components/schemas/RegenerationStrategy"
+      required:
+        - type
+        - tenantId
+        - payload
+        - uid
+        - strategy
+tags:
+  - name: graph
+    description: Graph Core MCP Server - Source of truth for the Knowledge Graph
+  - name: discovery
+    description: Discovery MCP Server - Persona ecosystem discovery from Founding Intent
+  - name: derivation
+    description: Derivation MCP Server - Requirements engineering, conflict
+      detection, synthesis
+  - name: cascade
+    description: Cascade MCP Server - 12-layer artifact generation with human gates
+  - name: verification
+    description: Verification MCP Server - Drift detection, SMT proofs, fitness functions
